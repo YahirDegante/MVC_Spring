@@ -9,8 +9,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/peliculas")
 public class ControlPeliculas {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    @Secured("ROLE_RECE")
+    @Secured({"ROLE_RECE", "ROLE_ADULTO", "ROLE_NINO"})
     public String index(){
         return "peliculas";
     };
+
+    @RequestMapping(value = { "/romance", "/terror", "/accion"}, method = RequestMethod.GET)
+    @Secured({"ROLE_ADULTO"})
+    public String peliculasAdultos() {
+        return "peliculas";
+    }
+
+    @RequestMapping(value = {"/animacion", "/comedia", "/aventura"}, method = RequestMethod.GET)
+    @Secured({"ROLE_NINO", "ROLE_ADULTO"})
+    public String peliculasNinos() {
+        return "peliculas";
+    }
 }
